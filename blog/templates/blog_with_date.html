@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>博客按日期分类</title>
+</head>
+<body>
+<h2>博客按日期分类}</h2>
+    {% for blog in blogs %}
+        <a href="{% url 'blog_detail' blog.pk %}">
+        <h3>{{ blog.title }}</h3>
+        </a>
+        <p>{{ blog.context|truncatechars:40 }}</p>
+        <hr>
+    {% endfor %}
+<p>一共有{{ blogs|length }}篇博客</p>
+</body>
+</html>

@@ -1,0 +1,70 @@
+{% extends "blog_base.html" %}
+
+{% block header_extends %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+{% endblock %}
+
+{% block picture %}url(../static/startbootstrap-clean-blog-gh-pages/img/about-bg.jpg)
+{% endblock %}
+
+{% block heading %}
+    About Me
+{% endblock %}
+
+{% block subheading %}This is what I do.
+{% endblock %}
+
+{% block content %}
+    <p style="font-family: fantasy;">该网站是用来学习Python的Django框架所建立的</p>
+        <p>网页模板使用bootstrap框架</p>
+          <p><a href="https://startbootstrap.com/themes/clean-blog/">Clean Blog - Bootstrap Blog Theme - Start Bootstrap</a></p>
+        <p>网站建立教程主要来自B站的视频和Djanggo文档:</p>
+          <p><a href="https://space.bilibili.com/252028233?spm_id_from=333.788.b_765f7570696e666f.2">再敲一行代码的个人空间 - 哔哩哔哩 ( ゜- ゜)つロ 乾杯~ Bilibili</a></p>
+          <p><a href="https://www.djangoproject.com/">The Web framework for perfectionists with deadlines | Django</a></p>
+          <p>邮件地址：<a href="mailto:710924561@qq.com">710924561@qq.com</a></p>
+    <div id="container" style="min-width: 600px;height:400px;"></div>
+    <script>
+        // 图表配置
+        let options = {
+            chart: {
+                type: 'line'                          //指定图表的类型，默认是折线图（line）
+            },
+            title: {
+                text: '本周博客访问量统计'                 // 标题
+            },
+            yAxis: {
+                title: {
+                    text: null                // y 轴标题
+                }
+            },
+            xAxis: {
+                categories: {{ dates| safe }}   // x 轴分类
+            },
+            series: [{                              // 数据列
+                name: '访问量',                        // 数据列名
+                data: {{ read_num_statistics }}                     // 数据
+            }],
+            legend: {enabled: false},
+            credit: {enabled: false},
+        };
+        // 图表初始化函数
+        let chart = Highcharts.chart('container', options);
+    </script>
+    <div>
+    <p>今日热门文章</p>
+    {% for hot_datum in hot_data %}
+        <li>
+            <a href="{% url 'blog_detail' hot_datum.content_object.pk %}">
+                {{ hot_datum.content_object.title }}
+            </a>({{ hot_datum.read_num }})
+        </li>
+
+    {% empty %}
+        <li>今天没有热门文章</li>
+    {% endfor %}
+    </div>
+{% endblock %}
+
+{% block paging%}
+<br>
+ {% endblock %}
